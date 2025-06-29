@@ -1,0 +1,20 @@
+{
+  "name": "samp",
+  "version": "1.0.0",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HARINID2716/MEAN-Full-stack.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HARINID2716/MEAN-Full-stack/issues"
+  },
+  "homepage": "https://github.com/HARINID2716/MEAN-Full-stack#readme",
+  "description": ""
+}
