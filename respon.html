@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+     <div class="2xl:container mx-auto">
+            <div class="w-[90%] mx-auto grid grid-cols-1 md:grid-cols-2">
+                <div class="space-x-2 py-2 bg-blue-200 flex justify-between">
+                    <img src="https://ik.imagekit.io/hhqmo4nv4/MERN/food-munch-img.png?updatedAt=1750739544587" alt="Food Munch Logo" class="max-h-16 w-16">
+                    <div class="flex py-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" 
+                            width="28" 
+                            viewBox="0 0 24 24" 
+                            height="28" 
+                            fill="none"
+                            stroke="currentColor" 
+                            stroke-width="2" 
+                            stroke-linecap="round" 
+                            stroke-linejoin="round"
+                            class="lucide lucide-menu block md:hidden" id="menuI">
+                            <path d="M4 12h16" />
+                            <path d="M4 18h16" />
+                            <path d="M4 6h16" />
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" 
+                            width="24" 
+                            height="24" 
+                            viewBox="0 0 24 24" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            stroke-width="2" 
+                            stroke-linecap="round" 
+                            stroke-linejoin="round" 
+                            class="lucide lucide-x-icon lucide-x hidden" id="crossI">
+                            <path d="M18 6 6 18"/>
+                            <path d="m6 6 12 12"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="bg-pink-300 py-4 px-3 hidden md:block" id="navI">
+                    <ul class="flex gap-4 md:flex-row md:justify-end flex-col items-center ">
+                        <li><a href="#">Why_Choose_Us?</a></li>
+                        <li><a href="#">Explore_Menu</a></li>
+                        <li><a href="#">Delivery_&_Payment</a></li>
+                        <li><a href="#">Follow_Us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div> 
+        <script>
+        var menuI = document.getElementById("menuI");
+        var crossI = document.getElementById("crossI");
+        var navI = document.getElementById("navI");
+
+        menuI.addEventListener("click" , () => {
+            console.dir(navI);
+            navI.classList.toggle("hidden");
+            croosI.classList.remove("hidden");
+            menuI.classList.add("hidden");
+        })
+</script>
+</body>
+</html> 
