@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat UI - Tailwind</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-cover bg-center min-h-screen flex items-center justify-center" style="background-image: url('https://assets.ccbp.in/frontend/react-js/whatsapp-bg.png');">
+
+  <div class="w-[350px] bg-white/80 rounded-lg shadow-lg overflow-hidden">
+    <div class="bg-[#323f4b] text-white text-center py-4 text-lg font-semibold">
+      Rahul
+    </div>
+    <div id="chatBox" class="p-4 flex flex-col gap-3 h-[400px] overflow-y-auto bg-transparent">
+      <!-- Messages appear here -->
+    </div>
+  </div>
+
+  <script>
+    
+    const messages = [
+  { text: "Hello Rahul, how are you?", type: "sent" },
+  { text: "Hi Varakumar, I am good. How about you?", type: "received" },
+  { text: "I'm fine. I published my website recently", type: "sent" },
+  { text: "Oh great Varakumar! Can you send me the URL?", type: "received" },
+  { text: "https://varakumar.ccbp.tech", type: "sent" },
+  { text: "Awesome Varakumar, where did you learn?", type: "received" },
+  { text: "NxtWave CCBP 4.0 Program", type: "sent" }
+];
+
+let index = 0;
+const chatBox = document.getElementById("chatBox");
+
+function showMessage() {
+  if (index < messages.length) {
+    const msg = document.createElement("div");
+    msg.className = `
+      max-w-[80%] px-4 py-2 rounded-lg text-sm
+      ${messages[index].type === "sent" ? "bg-blue-500 text-white self-end" : "bg-gray-300 text-black self-start"}
+    `;
+    msg.textContent = messages[index].text;
+    chatBox.appendChild(msg);
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    index++;
+    setTimeout(showMessage, 1500);
+  }
+}
+
+showMessage();
+
+
+  </script>
+</body>
+</html>
