@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bulb and Cat ON/OFF</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div class="bg-black min-h-screen flex flex-col items-center justify-center">
+    
+    <!-- Bulb Image -->
+    <img id="bulb" src="https://ik.imagekit.io/4z8covdo9/Full%20stack/bulb-go-on-img.png" alt="bulb_on" class="h-64 mb-4">
+
+    <!-- Cat Image -->
+    <img id="cat" src="https://ik.imagekit.io/4z8covdo9/Full%20stack/cat-img.png" alt="cat_on" class="h-56">
+
+    <!-- Buttons -->
+    <div class="flex justify-center gap-16 py-10">
+      <button onclick="turnOn()" class="border-2 border-black py-2 px-8 rounded-md bg-white hover:bg-green-600">ON</button>
+      <button onclick="turnOff()" class="border-2 border-black py-2 px-8 rounded-md bg-white hover:bg-red-600">OFF</button>
+    </div>
+  </div>
+
+  <script>
+    var bulb = document.getElementById("bulb");
+    var cat = document.getElementById("cat");
+
+    function turnOn() {
+      bulb.src = "https://ik.imagekit.io/4z8covdo9/Full%20stack/bulb-go-on-img.png";
+      cat.src = "https://ik.imagekit.io/4z8covdo9/Full%20stack/cat-img.png";
+    }
+
+    function turnOff() {
+      bulb.src = "https://ik.imagekit.io/4z8covdo9/Full%20stack/bulb-go-off-img.png";
+      cat.src = "https://ik.imagekit.io/4z8covdo9/Full%20stack/cat-eyes-img.png"; 
+    }
+  </script>
+</body>
+</html>
