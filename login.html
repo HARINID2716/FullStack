@@ -86,19 +86,19 @@
 
       // Validation
       if (!newPassword || !confirmPassword) {
-        feedback.textContent = "⚠️ Please fill in both password fields.";
+        feedback.textContent = " Please fill in both password fields.";
         feedback.className = "text-red-600 text-center";
         return;
       }
 
       if (newPassword.length < 8) {
-        feedback.textContent = "🔒 Password must be at least 8 characters.";
+        feedback.textContent = "Password must be at least 8 characters.";
         feedback.className = "text-red-600 text-center";
         return;
       }
 
       if (newPassword !== confirmPassword) {
-        feedback.textContent = "❌ Passwords do not match.";
+        feedback.textContent = "Passwords do not match.";
         feedback.className = "text-red-600 text-center";
         return;
       }
@@ -110,11 +110,11 @@
       database.ref("users/current_user").set({
         password: hashedPassword
       }).then(() => {
-        feedback.textContent = "✅ Password updated successfully!";
+        feedback.textContent = "Password updated successfully!";
         feedback.className = "text-green-600 text-center";
         document.getElementById("passwordForm").reset();
       }).catch((error) => {
-        feedback.textContent = "❌ Error: " + error.message;
+        feedback.textContent = "Error: " + error.message;
         feedback.className = "text-red-600 text-center";
         console.error("Firebase write failed:", error);
       });
