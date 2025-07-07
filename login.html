@@ -5,65 +5,69 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Update Password</title>
 
-  <!-- ✅ Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- ✅ CryptoJS for SHA-256 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </head>
 <body class="bg-gray-100 flex justify-center items-center min-h-screen">
 
-  <!-- ✅ Form Card -->
   <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
     <h2 class="text-2xl font-bold text-center mb-6 text-gray-700">Update Password</h2>
 
     <form id="passwordForm" class="space-y-4">
-      <!-- User ID Input -->
+      <!-- ✅ Username for storing in Firebase -->
       <input
         type="text"
         id="userId"
-        placeholder="Enter User ID"
+        placeholder="Enter Username"
         required
         class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
 
-      <!-- Password Input + Toggle -->
+      <!-- New Password -->
       <div class="relative">
         <input
           type="password"
           id="newPassword"
-          placeholder="Enter New Password"
+          placeholder="New Password"
           required
           class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <button
           type="button"
           id="togglePassword"
-          class="absolute right-2 top-2 text-sm text-blue-600 hover:underline focus:outline-none"
+          class="absolute right-2 top-2 text-sm text-blue-600 hover:underline"
         >
           Show
         </button>
       </div>
 
-      <!-- Submit Button -->
+      <!-- Confirm Password -->
+      <input
+        type="password"
+        id="confirmPassword"
+        placeholder="Confirm Password"
+        required
+        class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+
+      <!-- Submit -->
       <button
         type="submit"
-        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition"
+        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
       >
         Update Password
       </button>
     </form>
 
-    <!-- ✅ Feedback Message -->
     <p id="feedback" class="mt-4 text-center font-medium"></p>
   </div>
 
-  <!-- ✅ Firebase SDKs -->
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.12.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.1/firebase-database-compat.js"></script>
 
   <script>
-    // ✅ Firebase Config
+    // Firebase Config
     const firebaseConfig = {
       apiKey: "AIzaSyCYWd1bOYl-6OQ3swagsrnxyR8b9hUVqjU",
       authDomain: "login-e1178.firebaseapp.com",
@@ -75,21 +79,22 @@
       measurementId: "G-XQZDFMY16F"
     };
 
-    // ✅ Initialize Firebase
+    // Init Firebase
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
 
-    // ✅ Handle Password Form Submit
+    // Submit Handler
     document.getElementById("passwordForm").addEventListener("submit", function (e) {
       e.preventDefault();
 
       const userId = document.getElementById("userId").value.trim();
       const newPassword = document.getElementById("newPassword").value.trim();
+      const confirmPassword = document.getElementById("confirmPassword").value.trim();
       const feedback = document.getElementById("feedback");
 
-      // ❗ Input Validations
-      if (!userId || !newPassword) {
-        feedback.textContent = "⚠️ Please fill in all fields.";
+      // Validation
+      if (!userId || !newPassword || !confirmPassword) {
+        feedback.textContent = "⚠️ All fields are required.";
         feedback.className = "text-red-600 text-center mt-4";
         return;
       }
@@ -100,14 +105,18 @@
         return;
       }
 
-      // ✅ Secure Hashing
+      if (newPassword !== confirmPassword) {
+        feedback.textContent = "❌ Passwords do not match.";
+        feedback.className = "text-red-600 text-center mt-4";
+        return;
+      }
+
       const hashedPassword = CryptoJS.SHA256(newPassword).toString();
 
-      // ✅ Save to Firebase
       database.ref("users/" + userId).set({
         password: hashedPassword
       }).then(() => {
-        feedback.textContent = "✅ Password updated successfully!";
+        feedback.textContent = "✅ Password updated for " + userId + "!";
         feedback.className = "text-green-600 text-center mt-4";
         document.getElementById("passwordForm").reset();
       }).catch((error) => {
@@ -116,15 +125,14 @@
       });
     });
 
-    // ✅ Toggle Password Show/Hide
+    // Toggle Password
     document.getElementById("togglePassword").addEventListener("click", function () {
-      const passwordInput = document.getElementById("newPassword");
-      const type = passwordInput.getAttribute("type");
-      if (type === "password") {
-        passwordInput.setAttribute("type", "text");
+      const input = document.getElementById("newPassword");
+      if (input.type === "password") {
+        input.type = "text";
         this.textContent = "Hide";
       } else {
-        passwordInput.setAttribute("type", "password");
+        input.type = "password";
         this.textContent = "Show";
       }
     });
