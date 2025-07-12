@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bacon Ipsum</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-4">
+
+  <div class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow">
+    <h1 class="text-2xl font-bold text-center mb-4">Bacon Ipsum</h1>
+
+    <div class="text-center">
+      <button id="getBaconBtn"
+        class="bg-blue-500 text-white py-2 px-4 rounded mb-4">
+        Get Bacon Text
+      </button>
+      <p id="click" class="text-sm text-black mb-4 hidden">Loading...</p>
+    </div>
+
+    <div id="output" class="space-y-4 text-black"></div>
+  </div>
+
+  <script>
+    async function fetchdata() {
+  const click = document.getElementById("click");
+  const output = document.getElementById("output");
+
+  output.innerHTML = "";
+  click.classList.remove("hidden");
+
+  try {
+    const res = await fetch("https://baconipsum.com/api/?type=all");
+    if (!res.ok) throw new Error("Failed to fetch");
+
+    const data = await res.json();
+    click.classList.add("hidden");
+
+    data.forEach(text => {
+      const p = document.createElement("p");
+      p.textContent = text;
+      output.appendChild(p);
+    });
+  } catch (err) {
+    click.classList.add("hidden");
+    output.innerHTML = `<p class="text-red-500">Error: ${err.message}</p>`;
+  }
+}
+
+document.getElementById("getBaconBtn").addEventListener("click", fetchdata);
+
+  </script>
+
+  <!--Bacon Ipsum Generator
+
+This simple web app fetches random bacon ipsum text using the `async/await` Fetch API and displays it dynamically.
+
+How to Run
+1. Download the files or clone the repo.
+2. Open `index.html` in your browser.
+3. Click the button to fetch bacon text!
+
+Features
+- Uses modern `async/await` syntax.
+- Error handling with `try...catch`.
+- Tailwind CSS for styling.
+- Button to refresh bacon text.
+- Loading indicator.
+
+API Used
+[Bacon Ipsum API](https://baconipsum.com/api/?type=all)
+
+No API key or installation is required.
+
+ -->
+</body>
+</html>

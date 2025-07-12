@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bacon Ipsum Generator</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans p-4">
+
+  <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold mb-4 text-center">Bacon Ipsum Generator</h1>
+    
+    <div class="text-center">
+      <button 
+        onclick="fetchBacon()" 
+        class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded mb-4">
+        Get Bacon Text
+      </button>
+      <p id="loading" class="text-sm text-gray-500 mb-4 hidden">Loading...</p>
+    </div>
+
+    <div id="output" class="space-y-4 text-gray-700"></div>
+  </div>
+
+  <script>
+  function fetchBacon() {
+    const loading = document.getElementById("loading");
+    const output = document.getElementById("output");
+
+    output.innerHTML = "";
+    loading.classList.remove("hidden");
+
+  fetch("https://baconipsum.com/api/?type=all")
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch bacon ipsum!");
+      }
+      return response.json();
+    })
+    .then(data => {
+      loading.classList.add("hidden");
+      data.forEach(paragraph => {
+        const p = document.createElement("p");
+        p.textContent = paragraph;
+        output.appendChild(p);
+      });
+    })
+    .catch(error => {
+      loading.classList.add("hidden");
+      output.innerHTML = `<p class="text-red-500 font-semibold">Error: ${error.message}</p>`;
+    });
+}
+
+  </script>
+</body>
+</html>
