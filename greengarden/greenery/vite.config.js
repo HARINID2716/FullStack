@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [react()],
   base: '/FullStack/',
   build: {
-    outDir: '../../docs'
+    outDir: '../../'
   }
 })
