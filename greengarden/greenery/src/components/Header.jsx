@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, X, ShoppingCart, User, ChevronDown } from "lucide-react";
 import AdminMessagesView from "./AdminMessagesView";
-import { useCart } from "../context/CartContext";
+import { useCartHook } from "../hooks/useCart";
 import supabase from "../config/supabase";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { cartItems } = useCart();
+  const { cartItems } = useCartHook();
   const cartCount = cartItems.reduce((sum, item) => sum + item.qty, 0);
 
   const [scrolled, setScrolled] = useState(false);
@@ -181,6 +181,9 @@ const Header = () => {
             <Link to="/post" className="hover:text-green-600">Post</Link>
             <Link to="/video" className="hover:text-green-600">Video</Link>
             <Link to="/fertilizer" className="hover:text-green-600">Fertilizer</Link>
+
+            {/* Admin Messages - Only for logged in users */}
+            {user && !userLoading && <AdminMessagesView />}
 
             {/* Cart */}
             <button

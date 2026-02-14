@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import supabase from "../config/supabase";
 import AdminMessages from "./AdminMessages";
@@ -29,7 +29,6 @@ const AdminDashboard = () => {
   });
   const [recentSales, setRecentSales] = useState([]);
   const [pendingProducts, setPendingProducts] = useState([]);
-  const [userActivity, setUserActivity] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Fetch dashboard statistics
@@ -189,7 +188,7 @@ const AdminDashboard = () => {
               { id: "users", label: "Users", icon: Users },
               { id: "content", label: "Content", icon: FileText },
               { id: "messages", label: "Messages", icon: Mail },
-            ].map(({ id, label, icon: Icon }) => (
+            ].map(({ id, label }) => (
               <button
                 key={id}
                 onClick={() => setActiveTab(id)}
@@ -199,7 +198,6 @@ const AdminDashboard = () => {
                     : "border-transparent text-gray-600 hover:text-gray-900"
                 }`}
               >
-                <Icon size={18} />
                 <span className="hidden sm:inline">{label}</span>
               </button>
             ))}

@@ -1,7 +1,0 @@
-# GitHub Pages configuration
-plugins:
-  - jekyll-sitemap
-
-# Handle SPA routing
-include:
-  - _redirects

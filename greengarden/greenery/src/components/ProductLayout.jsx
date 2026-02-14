@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "../config/supabase";
-import { useCart } from "../context/CartContext";
+import { useCartHook } from "../hooks/useCart";
 
 const ProductLayout = () => {
   const [name, setName] = useState("");
@@ -13,7 +13,6 @@ const ProductLayout = () => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const BUCKET = import.meta.env.VITE_SUPABASE_BUCKET || "product-images";
-  const { addToCart } = useCart();
 
   /* ================= AUTH USER ================= */
   useEffect(() => {
@@ -86,8 +85,7 @@ const ProductLayout = () => {
     }
 
     const { data: authData } = await supabase.auth.getUser();
-    const currentUser = authData?.user;
-    if (!currentUser) {
+    if (!authData?.user) {
       alert("Please login first");
       return;
     }
@@ -95,8 +93,9 @@ const ProductLayout = () => {
     setUploading(true);
 
     try {
+      const currentUser = authData?.user;
       // Preflight: ensure the bucket exists
-      const { data: listCheck, error: listError } = await supabase.storage
+      const { error: listError } = await supabase.storage
         .from(BUCKET)
         .list('', { limit: 1 });
 
@@ -299,8 +298,7 @@ const ProductLayout = () => {
 };
 
 const ProductCard = ({ item, user, onDelete }) => {
-  const { addToCart } = useCart();
-  const [qty, setQty] = useState(1);
+  const { addToCart } = useCartHook();
 
   // For user-uploaded items, use default values if not present
   const rating = item.rating || 0;

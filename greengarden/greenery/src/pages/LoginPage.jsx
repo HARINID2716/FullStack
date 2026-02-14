@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import supabase from "../config/supabase";
 
@@ -71,7 +71,7 @@ const LoginPage = () => {
       // 3️⃣ Success
       localStorage.setItem("isAdmin", "true");
       navigate("/admin", { replace: true });
-    } catch (_err) {
+    } catch {
       setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);

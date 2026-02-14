@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Menu, X, Home, Users, FileText, Video, Book, ShoppingCart } from "lucide-react";
 import { supabase } from "../config/supabase";

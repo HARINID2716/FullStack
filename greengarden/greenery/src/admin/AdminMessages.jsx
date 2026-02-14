@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import supabase from "../config/supabase";
 
 const AdminMessages = () => {
@@ -6,10 +6,6 @@ const AdminMessages = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    fetchMessages();
-  }, []);
 
   // Fetch all admin messages
   const fetchMessages = async () => {
@@ -26,6 +22,13 @@ const AdminMessages = () => {
 
     setMessages(data || []);
   };
+
+  useEffect(() => {
+    const initializeMessages = () => {
+      fetchMessages();
+    };
+    initializeMessages();
+  }, []);
 
   // Create a new admin message
   const createMessage = async () => {

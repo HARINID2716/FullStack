@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import supabase from "../config/supabase";
@@ -98,7 +98,7 @@ const UserRegister = () => {
       setIsError(false);
       setMessage("Registration successful ✅ Redirecting...");
       setTimeout(() => navigate("/userlogin"), 1500);
-    } catch (err) {
+    } catch {
       setIsError(true);
       setMessage("Something went wrong ❌ Please try again.");
     } finally {

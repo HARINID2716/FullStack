@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "../config/supabase";
-import { useCart } from "../context/CartContext";
+import { useCartHook } from "../hooks/useCart";
 
 const Fertilizer = () => {
   const [name, setName] = useState("");
@@ -27,7 +27,7 @@ const Fertilizer = () => {
 
   /* ================= AUTH USER ================= */
   const getUser = async () => {
-    const { data: { user }, error } = await supabase.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
     if (user) setUser(user);
   };
 
@@ -98,7 +98,7 @@ const Fertilizer = () => {
       const fileName = `${Date.now()}-${file.name}`;
 
       // Upload image to Supabase storage
-      const { data: uploadData, error: uploadError } = await supabase.storage
+      const { error: uploadError } = await supabase.storage
         .from(BUCKET)
         .upload(fileName, file);
 
@@ -249,7 +249,7 @@ const Fertilizer = () => {
 };
 
 const ProductCard = ({ item, user, onDelete }) => {
-  const { addToCart } = useCart();
+  const { addToCart } = useCartHook();
 
   // For user-uploaded items, use default values if not present
   const rating = item.rating || 0;

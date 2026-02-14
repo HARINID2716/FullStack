@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { supabase } from "../config/supabase";
 
 const Video = () => {
@@ -11,14 +11,9 @@ const Video = () => {
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState("");
   const [uploading, setUploading] = useState(false);
-  const [fileKey, setFileKey] = useState(Date.now());
+  const [fileKey, setFileKey] = useState(() => Date.now());
 
   /* ================= AUTH USER ================= */
-  useEffect(() => {
-    getUser();
-    fetchVideos();
-  }, []);
-
   const getUser = async () => {
     const { data } = await supabase.auth.getUser();
     setUser(data?.user || null);
@@ -33,6 +28,14 @@ const Video = () => {
 
     setVideos(data || []);
   };
+
+  useEffect(() => {
+    const initializeData = () => {
+      getUser();
+      fetchVideos();
+    };
+    initializeData();
+  }, []);
 
   /* ================= HELPERS ================= */
   const isYouTube = (url) =>

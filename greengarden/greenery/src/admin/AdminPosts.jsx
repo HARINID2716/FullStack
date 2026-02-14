@@ -1,12 +1,8 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import supabase from "../config/supabase";
 
 const AdminPosts = () => {
   const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    fetchPosts();
-  }, []);
 
   // Fetch all posts
   const fetchPosts = async () => {
@@ -23,6 +19,13 @@ const AdminPosts = () => {
 
     setPosts(data || []);
   };
+
+  useEffect(() => {
+    const initializePosts = () => {
+      fetchPosts();
+    };
+    initializePosts();
+  }, []);
 
   // Delete any post (admin)
   const deletePost = async (postId) => {

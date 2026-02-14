@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "../config/supabase";
-import { useCart } from "../context/CartContext";
+import { useCartHook } from "../hooks/useCart";
 
 const Seeds = () => {
   const [name, setName] = useState("");
@@ -11,7 +11,7 @@ const Seeds = () => {
   const [uploading, setUploading] = useState(false);
   const [fileKey, setFileKey] = useState(Date.now());
   const BUCKET = import.meta.env.VITE_SUPABASE_BUCKET || "product-images";
-  const { addToCart } = useCart();
+  const { addToCart } = useCartHook();
 
   /* ================= AUTH USER ================= */
   useEffect(() => {
@@ -68,49 +68,6 @@ const Seeds = () => {
     setUploading(true);
 
     try {
-      // Preflight: ensure the bucket exists to avoid 'Bucket not found' errors
-      const { data: listCheck, error: listError } = await supabase.storage
-        .from(BUCKET)
-        .list('', { limit: 1 });
-
-      if (listError) {
-        console.error('Bucket check error:', listError);
-        if (listError.message?.includes('Bucket not found') || listError.status === 404) {
-          // Try to create the bucket
-          try {
-            const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-            const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
-            const response = await fetch(`${supabaseUrl}/storage/v1/bucket`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${supabaseKey}`,
-                'apikey': supabaseKey,
-              },
-              body: JSON.stringify({
-                name: BUCKET,
-                public: true, // Make it public for images
-              }),
-            });
-            if (!response.ok) {
-              throw new Error(`Failed to create bucket: ${response.statusText}`);
-            }
-            console.log(`Bucket "${BUCKET}" created successfully.`);
-          } catch (createError) {
-            console.error('Failed to create bucket:', createError);
-            alert(
-              `Storage bucket "${BUCKET}" not found and could not be created. Please create it manually in Supabase dashboard → Storage → Create bucket (name: ${BUCKET}).`
-            );
-            setUploading(false);
-            return;
-          }
-        } else {
-          alert(`Storage error: ${listError.message}`);
-          setUploading(false);
-          return;
-        }
-      }
-
       const fileName = `${Date.now()}-${file.name}`;
 
       // Upload image to Supabase Storage
@@ -175,7 +132,7 @@ const Seeds = () => {
   };
 
   /* ================= DELETE SEED ================= */
-  const handleDelete = async (seed) => {
+  const handleDeleteSeed = async (seedId) => {
     if (!window.confirm("Are you sure you want to delete this seed?")) {
       return;
     }
@@ -249,7 +206,7 @@ const Seeds = () => {
             )}
             <button
               onClick={() => addToCart(seed)}
-              className="bg-green-600 mt-3 w-full bg-[#87b446] text-white py-2 rounded-full disabled:opacity-60"
+              className="mt-3 w-full bg-[#87b446] text-white py-2 rounded-full disabled:opacity-60"
               disabled={!seed.approved}
             >
               Add to Cart

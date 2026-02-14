@@ -1,12 +1,13 @@
+import React from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 
-// Layouts
+// ================= LAYOUTS =================
 import Layout from "./Layout";
 import AuthLayout from "./AuthLayout";
 import AdminLayout from "../admin/AdminLayout";
 import ProtectedRoute from "./ProtectedRoute";
 
-// Pages
+// ================= PAGES =================
 import HomePage from "../pages/HomePage";
 import AboutPage from "../pages/AboutPage";
 import ErrorPage from "../pages/ErrorPage";
@@ -16,17 +17,16 @@ import UserLogin from "../pages/UserLogin";
 import UserRegister from "../pages/UserRegister";
 import UserProfile from "../pages/UserProfile";
 
-// Admin Pages
+// ================= ADMIN PAGES =================
 import AdminDashboard from "../admin/AdminDashboard";
 import AdminVideoUpload from "../admin/AdminVideoUpload";
 import Users from "../admin/Users";
 import AdminPosts from "../admin/AdminPosts";
 import AdminSales from "../admin/AdminSales";
 import AdminMessages from "../admin/AdminMessages";
+
+// ================= COMPONENTS =================
 import AdminMessagesView from "../components/AdminMessagesView";
-
-
-// Components
 import Video from "../components/Video";
 import Vegetable from "../components/Vegetable";
 import Fertilizer from "../components/Fertilizer";
@@ -35,10 +35,14 @@ import ProductLayout from "../components/ProductLayout";
 import Sampling from "../components/Sampling";
 import Post from "../components/Post";
 
+// ==================================================
 
 const router = createBrowserRouter([
-  // 🔁 shortcut
-  { path: "/a", element: <Navigate to="/admin" replace /> },
+  // 🔁 Shortcut
+  {
+    path: "/a",
+    element: <Navigate to="/admin" replace />,
+  },
 
   // ================= ADMIN ROUTES =================
   {
@@ -51,23 +55,23 @@ const router = createBrowserRouter([
       { path: "posts", element: <AdminPosts /> },
       { path: "sales", element: <AdminSales /> },
       { path: "messages", element: <AdminMessages /> },
-      { path: "messages/view", element: <AdminMessagesView /> }
+      { path: "messages/view", element: <AdminMessagesView /> },
     ],
   },
 
-  // ================= USER AUTH ROUTES =================
+  // ================= AUTH ROUTES =================
   {
     path: "/",
     element: <AuthLayout />,
     children: [
-      { index: true, element: <Navigate to="/userlogin" replace /> }, // ✅ FIRST PAGE
+      { index: true, element: <Navigate to="/userlogin" replace /> },
       { path: "login", element: <LoginPage /> },
       { path: "userlogin", element: <UserLogin /> },
       { path: "register", element: <UserRegister /> },
     ],
   },
 
-  // ================= MAIN APP ROUTES =================
+  // ================= MAIN APP (PROTECTED) =================
   {
     path: "/",
     element: (
@@ -77,7 +81,7 @@ const router = createBrowserRouter([
     ),
     errorElement: <ErrorPage />,
     children: [
-      { path: "home", element: <HomePage /> }, // optional
+      { path: "home", element: <HomePage /> },
       { path: "about", element: <AboutPage /> },
       { path: "cart", element: <CartPage /> },
       { path: "video", element: <Video /> },
@@ -93,7 +97,10 @@ const router = createBrowserRouter([
   },
 
   // ================= FALLBACK =================
-  { path: "*", element: <ErrorPage /> },
+  {
+    path: "*",
+    element: <ErrorPage />,
+  },
 ]);
 
 export default router;

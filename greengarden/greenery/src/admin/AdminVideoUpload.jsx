@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "../config/supabase";
 
-const AdminVideoUpload = ({ isAdmin = true }) => {
+const AdminVideoUpload = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [source, setSource] = useState("device"); // device | link
@@ -13,15 +13,8 @@ const AdminVideoUpload = ({ isAdmin = true }) => {
   const [fileKey, setFileKey] = useState(Date.now());
   const [editingVideo, setEditingVideo] = useState(null);
 
-  if (!isAdmin) {
-    
-  }
-
+  
   /* ================= FETCH VIDEOS ================= */
-  useEffect(() => {
-    fetchVideos();
-  }, []);
-
   const fetchVideos = async () => {
     const { data, error } = await supabase
       .from("videos")
@@ -31,6 +24,10 @@ const AdminVideoUpload = ({ isAdmin = true }) => {
     if (error) console.error(error);
     else setVideos(data);
   };
+
+  useEffect(() => {
+    fetchVideos();
+  }, []);
 
   /* ================= HELPERS ================= */
   const isYouTube = (url) =>

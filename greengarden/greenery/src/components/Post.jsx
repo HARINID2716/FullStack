@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import supabase from "../config/supabase";
 
 const Post = () => {
@@ -7,11 +7,6 @@ const Post = () => {
   const [user, setUser] = useState(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-
-  useEffect(() => {
-    fetchPosts();
-    fetchUser();
-  }, []);
 
   // Fetch logged-in user
   const fetchUser = async () => {
@@ -46,6 +41,14 @@ const Post = () => {
 
     setPosts(data || []);
   };
+
+  useEffect(() => {
+    const initializeData = () => {
+      fetchPosts();
+      fetchUser();
+    };
+    initializeData();
+  }, []);
 
   // Add a new post (users only)
   const createPost = async () => {

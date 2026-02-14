@@ -1,19 +1,12 @@
-import { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 // import Vegetable from "../components/Vegetable"; // Not used in this component
 import HeroSection from "../components/HeroSection";
 import AdminMessagesView from "../components/AdminMessagesView";
 
 const HomePage = () => {
-    const [count, setCount] = useState(10);
-
     useEffect(() => {
         console.log("useEffect Executed");
-        setCount(prevCount => prevCount + 1);
     }, []);
-
-    const fetchData = async () => {
-
-    };
 
     return (
         <>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import supabase from "../config/supabase";
@@ -49,7 +49,7 @@ const UserLogin = () => {
       } else {
         navigate("/home");
       }
-    } catch (_err) {
+    } catch {
       setMessage("Something went wrong. Please try again.");
     } finally {
       setLoading(false);

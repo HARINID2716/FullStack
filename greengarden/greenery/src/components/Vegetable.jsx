@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import supabase from "../config/supabase";
-import { useCart } from "../context/CartContext";
+import { useCartHook } from "../hooks/useCart";
 
 const Vegetable = () => {
   const [name, setName] = useState("");
@@ -9,7 +9,7 @@ const Vegetable = () => {
   const [file, setFile] = useState(null);
   const [user, setUser] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const [fileKey, setFileKey] = useState(Date.now());
+  const [fileKey] = useState(Date.now());
   const [vegetables, setVegetables] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -213,7 +213,7 @@ const Vegetable = () => {
 
 /* ================= BUYER CARD ================= */
 const ProductCard = ({ item, user, onDelete }) => {
-  const { addToCart } = useCart();
+  const { addToCart } = useCartHook();
   const [kg, setKg] = useState(1);
 
   const isOwner = user && item.user_id === user.id;

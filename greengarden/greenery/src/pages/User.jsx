@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import supabase from "../config/supabase";
 
 const Users = () => {
@@ -23,7 +23,11 @@ const Users = () => {
 
   /* ================= REALTIME ================= */
   useEffect(() => {
-    fetchUsers();
+    const initializeUsers = () => {
+      fetchUsers();
+    };
+
+    initializeUsers();
 
     const channel = supabase
       .channel("profiles-changes")

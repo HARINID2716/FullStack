@@ -1,8 +1,9 @@
-import { useCart } from "../context/CartContext";
+import React from "react";
+import { useCartHook } from "../hooks/useCart";
 
 const CartPage = () => {
   const { cartItems, addToCart, removeFromCart, deleteItem, totalAmount } =
-    useCart();
+    useCartHook();
 
   if (cartItems.length === 0) {
     return <h2 className="text-center mt-32">Cart is Empty 🛒</h2>;

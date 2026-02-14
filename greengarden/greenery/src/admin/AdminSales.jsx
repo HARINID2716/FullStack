@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import supabase from "../config/supabase";
 import { X, Pencil } from "lucide-react";
 
@@ -8,11 +8,6 @@ const AdminSales = () => {
   const [editingProduct, setEditingProduct] = useState(null);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
-
-  // Fetch all products from all categories
-  useEffect(() => {
-    fetchProducts();
-  }, []);
 
   const normalizeApproved = (val) => {
     if (val === true || val === "true" || val === "t" || val === 1 || val === "1") return true;
@@ -32,22 +27,27 @@ const AdminSales = () => {
         .select("*")
         .order("created_at", { ascending: false });
 
-      if (!error && data) {
-        const productsWithTable = data.map((item) => ({
-          ...item,
-          table,
-          approved: normalizeApproved(item.approved),
-        }));
-        allProducts.push(...productsWithTable);
+      if (error) {
+        console.error(`Error fetching ${table}:`, error);
+        continue;
       }
+
+      const normalized = (data || []).map((d) => ({ ...d, approved: normalizeApproved(d.approved) }));
+      allProducts.push(...normalized.map((p) => ({ ...p, table })));
     }
 
-    // Sort all products by created_at descending
     allProducts.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
     setProducts(allProducts);
     setLoading(false);
   };
+
+  useEffect(() => {
+    const initializeProducts = () => {
+      fetchProducts();
+    };
+    initializeProducts();
+  }, []);
 
   // Delete product
   const handleDelete = async (product) => {

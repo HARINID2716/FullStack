@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import { supabase } from "../config/supabase";
 
-import { useCart } from "../context/CartContext";
+import { useCartHook } from "../hooks/useCart";
 
 
 
@@ -56,7 +56,7 @@ const Sampling = () => {
 
   const getUser = async () => {
 
-    const { data: { user }, error } = await supabase.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
 
     if (user) setUser(user);
 
@@ -196,7 +196,7 @@ const fetchApprovedSamplings = async () => {
 
       // Upload image to Supabase storage
 
-      const { data: uploadData, error: uploadError } = await supabase.storage
+      const { error: uploadError } = await supabase.storage
 
         .from(BUCKET)
 
@@ -471,7 +471,7 @@ const fetchApprovedSamplings = async () => {
 
 
 const ProductCard = ({ item, user, onDelete }) => {
-  const { addToCart } = useCart();
+  const { addToCart } = useCartHook();
   // ⭐ Clamp rating between 0–5 (CRASH FIX)
   const rating = item.rating ? Math.min(Math.max(item.rating, 0), 5) : 0;
 
