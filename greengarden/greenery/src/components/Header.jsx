@@ -12,7 +12,8 @@ const Header = () => {
 
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [potsOpen, setPotsOpen] = useState(false);
+  const [potsOpen, setPotsOpen] = useState(false); // desktop Sales dropdown
+  const [mobileSalesOpen, setMobileSalesOpen] = useState(false); // mobile Sales dropdown
   const [profileOpen, setProfileOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [userLoading, setUserLoading] = useState(true);
@@ -109,8 +110,9 @@ const Header = () => {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () =>
+    return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   const handleLogout = async () => {
@@ -269,6 +271,7 @@ const Header = () => {
       </header>
 
       {/* MOBILE MENU */}
+
       {menuOpen && (
         <div className="fixed inset-0 bg-white z-50 md:hidden">
           <div className="flex justify-between px-6 py-4 border-b">
@@ -283,7 +286,30 @@ const Header = () => {
           </div>
 
           <div className="px-8 py-6 space-y-4">
-            <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
+            <Link to="/" onClick={() => setMenuOpen(false)} className="block py-2">Home</Link>
+
+            {/* Sales Dropdown for Mobile */}
+            <div>
+              <button
+                onClick={() => setMobileSalesOpen(!mobileSalesOpen)}
+                className="flex items-center w-full justify-between py-2"
+              >
+                <span>Sales</span>
+                <ChevronDown size={18} className={mobileSalesOpen ? "rotate-180 transition-transform" : "transition-transform"} />
+              </button>
+              {mobileSalesOpen && (
+                <div className="ml-4 mt-1 space-y-1">
+                  <Link to="/seeds" onClick={() => setMenuOpen(false)} className="block py-1">Seeds</Link>
+                  <Link to="/vegetable" onClick={() => setMenuOpen(false)} className="block py-1">Vegetable</Link>
+                  <Link to="/products" onClick={() => setMenuOpen(false)} className="block py-1">Sampling</Link>
+                  <Link to="/sampling" onClick={() => setMenuOpen(false)} className="block py-1">Tools</Link>
+                </div>
+              )}
+            </div>
+
+            <Link to="/post" onClick={() => setMenuOpen(false)} className="block py-2">Post</Link>
+            <Link to="/video" onClick={() => setMenuOpen(false)} className="block py-2">Video</Link>
+            <Link to="/fertilizer" onClick={() => setMenuOpen(false)} className="block py-2">Fertilizer</Link>
 
             <button
               onClick={() => {

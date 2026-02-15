@@ -88,6 +88,23 @@ const LoginPage = () => {
           Admin Login
         </h2>
 
+        <div className="mb-4 p-3 bg-green-50 border border-green-100 rounded text-sm text-gray-700">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="font-semibold">Demo admin</div>
+              <div className="mt-1">Email: admin@gmail.com</div>
+              <div>Pass: admin1234</div>
+            </div>
+            <button
+              type="button"
+              onClick={() => { setEmail("admin@gmail.com"); setPassword("admin1234"); }}
+              className="ml-4 px-3 py-1 bg-green-700 text-white rounded text-sm"
+            >
+              Use demo
+            </button>
+          </div>
+        </div>
+
         <input
           type="email"
           placeholder="Email"
