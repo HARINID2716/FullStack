@@ -1,7 +1,7 @@
 {
   "hosting": {
-    "site": "portfolio-d86d6",
-    "public": "public",
+    "site": "tourism-8f58b",
+    "public": ".",
     "ignore": [
       "firebase.json",
       "**/.*",
