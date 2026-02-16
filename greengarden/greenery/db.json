@@ -1,0 +1,42 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Organic Vegetable Seeds",
+      "price": 120,
+      "category": "Seeds"
+    },
+    {
+      "id": "2",
+      "name": "Natural Fertilizer",
+      "price": 250,
+      "category": "Fertilizer"
+    }
+  ],
+  "admin": [
+    {
+      "id": "1",
+      "email": "admin@gmail.com",
+      "password": "1234"
+    }
+  ],
+  "users": [
+    {
+      "id": "8ab8",
+      "email": "harini6@gmail.com",
+      "password": "1234"
+    },
+    {
+      "id": "af92",
+      "email": "pooja1@gmail.com",
+      "password": "pooja1"
+    },
+    {
+      "id": "8aa1",
+      "name": "Harini D",
+      "phone": "7418810499",
+      "email": "harini168@gmail.com",
+      "password": "harini16"
+    }
+  ]
+}

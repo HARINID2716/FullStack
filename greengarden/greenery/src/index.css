@@ -1,0 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;.para{
+    color: rgb(90, 197, 90);
+    font-size: 2rem;
+}
