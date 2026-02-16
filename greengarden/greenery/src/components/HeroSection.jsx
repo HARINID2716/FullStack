@@ -60,7 +60,7 @@ const HeroSection = () => {
 
             <div className="flex gap-4">
               <a
-                href="/home/products"
+                href="/seeds"
                 className="px-5 py-3 bg-green-800 rounded-lg hover:bg-green-900 transition"
               >
                 Shop Now

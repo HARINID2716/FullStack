@@ -164,7 +164,7 @@ const Header = () => {
 
           {/* DESKTOP MENU */}
           <nav className="hidden md:flex gap-6 font-medium items-center">
-            <Link to="/">Home</Link>
+            <Link to="/home">Home</Link>
 
             <div className="relative" ref={potsRef}>
               <button onClick={() => setPotsOpen(!potsOpen)}>
@@ -286,7 +286,7 @@ const Header = () => {
           </div>
 
           <div className="px-8 py-6 space-y-4">
-            <Link to="/" onClick={() => setMenuOpen(false)} className="block py-2">Home</Link>
+            <Link to="/home" onClick={() => setMenuOpen(false)} className="block py-2">Home</Link>
 
             {/* Sales Dropdown for Mobile */}
             <div>

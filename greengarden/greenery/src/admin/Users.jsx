@@ -30,7 +30,7 @@ const Users = () => {
       // First try to get all users (requires admin policy)
       const { data, error } = await supabase
         .from("profiles")
-        .select("*")
+        .select("id, email, full_name, name, phone, avatar_url, is_admin, created_at, updated_at")
         .order("created_at", { ascending: false });
 
       if (error) {
@@ -39,7 +39,7 @@ const Users = () => {
         // Fallback: try to get current user only
         const { data: currentUserData, error: currentError } = await supabase
           .from("profiles")
-          .select("*")
+          .select("id, email, full_name, name, avatar_url, is_admin, created_at, updated_at")
           .eq("id", currentUser.id)
           .single();
 
@@ -155,6 +155,7 @@ const Users = () => {
           <tr>
             <th className="p-3">Name</th>
             <th className="p-3">Email</th>
+            <th className="p-3">Phone</th>
             <th className="p-3">Role</th>
             <th className="p-3">Status</th>
             <th className="p-3">Last Active</th>
@@ -165,8 +166,9 @@ const Users = () => {
         <tbody>
           {users.map((user) => (
             <tr key={user.id} className={`border-t border-gray-700 ${currentUser && currentUser.id === user.id ? 'bg-blue-100' : ''}`}>
-              <td className="p-3">{user.full_name || "N/A"}</td>
+              <td className="p-3">{user.full_name || user.name || user.email || "N/A"}</td>
               <td className="p-3">{user.email}</td>
+              <td className="p-3">{user.phone || "N/A"}</td>
               <td className="p-3">
                 {currentUser && currentUser.id === user.id ? (
                   <span className="bg-blue-600 text-white px-2 py-1 rounded text-sm">Admin</span>

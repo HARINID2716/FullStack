@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "../config/supabase";
 import { useCartHook } from "../hooks/useCart";
 
@@ -10,6 +11,7 @@ const Seeds = () => {
   const [user, setUser] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [fileKey, setFileKey] = useState(Date.now());
+  const navigate = useNavigate();
   const BUCKET = import.meta.env.VITE_SUPABASE_BUCKET || "product-images";
   const { addToCart } = useCartHook();
 
@@ -205,7 +207,13 @@ const Seeds = () => {
               <p className="text-orange-600 text-sm font-medium mt-1">⏳ Pending Approval</p>
             )}
             <button
-              onClick={() => addToCart(seed)}
+              onClick={() => {
+                addToCart(seed);
+                // On mobile (screen width < 768px), navigate to cart page
+                if (window.innerWidth < 768) {
+                  navigate("/cart");
+                }
+              }}
               className="mt-3 w-full bg-[#87b446] text-white py-2 rounded-full disabled:opacity-60"
               disabled={!seed.approved}
             >

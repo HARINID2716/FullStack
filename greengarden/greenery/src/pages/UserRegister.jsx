@@ -72,17 +72,25 @@ const UserRegister = () => {
         return;
       }
 
-      const user = data.user;
+      const user = data?.user || null;
+
+      // If Supabase is configured to require email confirmation, `data.user` may be null.
+      // In that case we should not attempt to insert a profile tied to the user id yet.
       if (!user) {
-        setIsError(true);
-        setMessage("Registration failed. Please try again.");
+        setIsError(false);
+        setMessage(
+          "Registration successful ✅ Please check your email to confirm your account before logging in."
+        );
+        // Redirect to login after a short delay (user will confirm email first)
+        setTimeout(() => navigate("/userlogin"), 2000);
         return;
       }
 
-      // 2️⃣ Insert profile data
-      const { error: profileError } = await supabase.from("profiles").insert([
+      // 2️⃣ Insert profile data for confirmed/auto-confirmed users
+      const { error: profileError } = await supabase.from("profiles").upsert([
         {
           id: user.id,
+          full_name: name.trim(),
           name: name.trim(),
           phone: phone.trim(),
           email: email.trim().toLowerCase(),
@@ -90,8 +98,11 @@ const UserRegister = () => {
       ]);
 
       if (profileError) {
-        setIsError(true);
-        setMessage("Profile save failed ❌");
+        console.error("Profile insert error:", profileError);
+        // Even if profile insert fails, the user account was created successfully
+        setIsError(false);
+        setMessage("Registration successful ✅ Account created. Please login.");
+        setTimeout(() => navigate("/userlogin"), 2000);
         return;
       }
 
